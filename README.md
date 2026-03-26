@@ -4,19 +4,19 @@ A full-stack task management application built to cover **Sections 5–13** of y
 
 ---
 
-## 📚 What You'll Learn From This Project
+## 📚 About This Project
 
-| Course Section | Covered By |
+| Topics | Covered By |
 |---|---|
-| Section 5: FastAPI Request Method Logic | All routers — GET, POST, PUT, PATCH, DELETE |
-| Section 6: Move Fast with FastAPI | Project structure, dependency injection, response models |
-| Section 7: Complete RESTful APIs | Full CRUD for Users, Projects, Tasks |
-| Section 8: Setup Database | SQLAlchemy engine, session, Base model (`app/db/database.py`) |
-| Section 9: API Request Methods | Every HTTP method used correctly in routers |
-| Section 10: Authentication & Authorization | JWT login, role-based access (admin vs member) |
-| Section 11: Authenticate Requests | `get_current_user`, `get_current_active_user`, `require_admin` dependencies |
-| Section 12: Large Production Database Setup | MySQL + connection pooling, `.env` config, `check_db_connection` |
-| Section 13: Alembic Data Migration | Two real migrations in `alembic/versions/` |
+| FastAPI Request Method Logic | All routers — GET, POST, PUT, PATCH, DELETE |
+| Move Fast with FastAPI | Project structure, dependency injection, response models |
+| Complete RESTful APIs | Full CRUD for Users, Projects, Tasks |
+| Setup Database | SQLAlchemy engine, session, Base model (`app/db/database.py`) |
+| API Request Methods | Every HTTP method used correctly in routers |
+| Authentication & Authorization | JWT login, role-based access (admin vs member) |
+| Authenticate Requests | `get_current_user`, `get_current_active_user`, `require_admin` dependencies |
+| Large Production Database Setup | MySQL + connection pooling, `.env` config, `check_db_connection` |
+| Alembic Data Migration | Two real migrations in `alembic/versions/` |
 
 ---
 
@@ -27,53 +27,53 @@ taskflow/
 ├── backend/
 │   ├── app/
 │   │   ├── core/
-│   │   │   ├── config.py         # Pydantic settings from .env
-│   │   │   └── security.py       # JWT + password hashing + auth dependencies
+│   │   │   ├── config.py         
+│   │   │   └── security.py       
 │   │   ├── db/
-│   │   │   └── database.py       # SQLAlchemy engine, session, Base
+│   │   │   └── database.py       
 │   │   ├── models/
-│   │   │   ├── user.py           # User ORM model
-│   │   │   └── task.py           # Task + Project ORM models
+│   │   │   ├── user.py           
+│   │   │   └── task.py         
 │   │   ├── schemas/
-│   │   │   ├── user.py           # Pydantic request/response schemas
-│   │   │   └── task.py           # Task + Project schemas with validators
+│   │   │   ├── user.py          
+│   │   │   └── task.py  
 │   │   ├── routers/
-│   │   │   ├── auth.py           # Register, login, /me, change-password
-│   │   │   ├── users.py          # User CRUD (admin-protected delete)
-│   │   │   ├── projects.py       # Project CRUD
-│   │   │   └── tasks.py          # Task CRUD + status update + filtering
-│   │   └── main.py               # FastAPI app, CORS, router registration
+│   │   │   ├── auth.py        
+│   │   │   ├── users.py    
+│   │   │   ├── projects.py     
+│   │   │   └── tasks.py        
+│   │   └── main.py            
 │   ├── alembic/
 │   │   ├── env.py
 │   │   └── versions/
-│   │       ├── 001_initial.py    # Create users, projects, tasks tables
-│   │       └── 002_add_due_date_index.py  # Add performance indexes
+│   │       ├── 001_initial.py   
+│   │       └── 002_add_due_date_index.py 
 │   ├── alembic.ini
-│   ├── seed.py                   # Populate demo data
+│   ├── seed.py           
 │   └── requirements.txt
 │
 └── frontend/
     ├── src/
     │   ├── api/
-    │   │   └── client.js         # Axios instance + all API calls
+    │   │   └── client.js     
     │   ├── context/
-    │   │   └── AuthContext.jsx   # Global auth state + login/logout
+    │   │   └── AuthContext.js
     │   ├── components/
-    │   │   ├── Layout.jsx        # Sidebar + nav
-    │   │   ├── Modal.jsx         # Reusable modal
-    │   │   └── Toast.jsx         # Notification toast
+    │   │   ├── Layout.jsx    
+    │   │   ├── Modal.jsx        
+    │   │   └── Toast.jsx       
     │   ├── pages/
     │   │   ├── LoginPage.jsx
     │   │   ├── RegisterPage.jsx
-    │   │   ├── DashboardPage.jsx       # Stats overview
-    │   │   ├── ProjectsPage.jsx        # Project list + create
-    │   │   ├── ProjectDetailPage.jsx   # Kanban board
-    │   │   ├── TasksPage.jsx           # Table with filters
-    │   │   ├── UsersPage.jsx           # User management
-    │   │   └── ProfilePage.jsx         # Profile + change password
-    │   ├── App.jsx               # Router setup
+    │   │   ├── DashboardPage.jsx    
+    │   │   ├── ProjectsPage.jsx     
+    │   │   ├── ProjectDetailPage.jsx  
+    │   │   ├── TasksPage.jsx          
+    │   │   ├── UsersPage.jsx          
+    │   │   └── ProfilePage.jsx     
+    │   ├── App.jsx         
     │   ├── main.jsx
-    │   └── index.css             # Full custom design system
+    │   └── index.css       
     ├── index.html
     ├── package.json
     └── vite.config.js
@@ -94,7 +94,7 @@ taskflow/
 ### 1. Create the MySQL Database
 
 ```sql
-CREATE DATABASE taskflow_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE DATABASE taskflow_db;
 ```
 
 ### 2. Backend Setup
