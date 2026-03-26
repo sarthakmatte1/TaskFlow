@@ -1,7 +1,5 @@
 # TaskFlow — FastAPI + ReactJS + MySQL Project
 
-A full-stack task management application built to cover **Sections 5–13** of your FastAPI course.
-
 ---
 
 ## 📚 About This Project
