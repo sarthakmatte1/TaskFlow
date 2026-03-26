@@ -264,3 +264,13 @@ alembic downgrade base
 | DELETE | `/api/users/{id}` | 🔐 Admin | Delete user |
 
 ---
+
+### 🗂 Snapshots
+Open http://localhost:8000/docs
+
+<img width="1680" height="898" alt="Screenshot 2026-03-26 at 9 53 03 PM" src="https://github.com/user-attachments/assets/65aeb73b-015e-4da8-8595-be021b96d257" />
+<img width="1680" height="963" alt="Screenshot 2026-03-26 at 9 53 21 PM" src="https://github.com/user-attachments/assets/dde4cbf5-e431-4e5c-b66d-4c2b651783ec" />
+<img width="1680" height="247" alt="Screenshot 2026-03-26 at 9 53 44 PM" src="https://github.com/user-attachments/assets/cc3d7984-abc1-4543-8d5c-9018da4a7a87" />
+<img width="1680" height="953" alt="Screenshot 2026-03-26 at 9 54 35 PM" src="https://github.com/user-attachments/assets/78598128-089b-4502-afd4-3524c3d593eb" />
+<img width="1680" height="957" alt="Screenshot 2026-03-26 at 9 55 28 PM" src="https://github.com/user-attachments/assets/23a6ff1c-c1a9-4ace-8351-03f1156b1cba" />
+
