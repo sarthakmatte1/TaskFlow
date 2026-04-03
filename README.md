@@ -1,22 +1,22 @@
 # TaskFlow — FastAPI + ReactJS + MySQL
 
-A full-stack task management application built to cover **Sections 5–13** of your FastAPI course.
+A full-stack task management application.
 
 ---
 
-## 📚 What You'll Learn
+## 📚 What's in the Project
 
-| Course Section                              | Covered By                                              |
+| Section                                     | Covered By                                              |
 | ------------------------------------------- | ------------------------------------------------------- |
-| Section 5: FastAPI Request Method Logic     | All routers — GET, POST, PUT, PATCH, DELETE             |
-| Section 6: Move Fast with FastAPI           | Project structure, dependency injection, response models |
-| Section 7: Complete RESTful APIs            | Full CRUD for Users, Projects, Tasks                    |
-| Section 8: Setup Database                   | SQLAlchemy engine, session, Base model (`app/db/database.py`) |
-| Section 9: API Request Methods              | Every HTTP method used correctly in routers             |
-| Section 10: Authentication & Authorization  | JWT login, role-based access (admin vs member)          |
-| Section 11: Authenticate Requests           | `get_current_user`, `get_current_active_user`, `require_admin` dependencies |
-| Section 12: Large Production Database Setup | MySQL + connection pooling, `.env` config, `check_db_connection` |
-| Section 13: Alembic Data Migration          | Two real migrations in `alembic/versions/`              |
+| FastAPI Request Method Logic     | All routers — GET, POST, PUT, PATCH, DELETE             |
+| Move Fast with FastAPI           | Project structure, dependency injection, response models |
+| Complete RESTful APIs            | Full CRUD for Users, Projects, Tasks                    |
+| Setup Database                   | SQLAlchemy engine, session, Base model (`app/db/database.py`) |
+| API Request Methods              | Every HTTP method used correctly in routers             |
+| Authentication & Authorization  | JWT login, role-based access (admin vs member)          |
+| Authenticate Requests           | `get_current_user`, `get_current_active_user`, `require_admin` dependencies |
+| Large Production Database Setup | MySQL + connection pooling, `.env` config, `check_db_connection` |
+| Alembic Data Migration          | Two real migrations in `alembic/versions/`              |
 
 ---
 
