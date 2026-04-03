@@ -1,0 +1,22 @@
+---
+# ── Namespace ─────────────────────────────────────────────────────────
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: taskflow
+  labels:
+    app: taskflow
+
+---
+# ── ConfigMap (non-secret config) ─────────────────────────────────────
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: taskflow-config
+  namespace: taskflow
+data:
+  MYSQL_DATABASE:               "taskflow_db"
+  MYSQL_USER:                   "taskflow"
+  ALGORITHM:                    "HS256"
+  ACCESS_TOKEN_EXPIRE_MINUTES:  "30"
+  DEBUG:                        "false"

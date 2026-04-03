@@ -1,0 +1,45 @@
+---
+# ── Ingress ────────────────────────────────────────────────────────────
+# Requires: nginx ingress controller installed in your cluster
+# Install:  kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.10.0/deploy/static/provider/cloud/deploy.yaml
+#
+# For TLS: replace "your-domain.com" and add cert-manager annotation
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: taskflow-ingress
+  namespace: taskflow
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target:       /
+    nginx.ingress.kubernetes.io/proxy-read-timeout:   "90"
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: "15"
+    # Uncomment below for HTTPS with cert-manager:
+    # cert-manager.io/cluster-issuer: "letsencrypt-prod"
+spec:
+  ingressClassName: nginx
+  # Uncomment for TLS:
+  # tls:
+  #   - hosts:
+  #       - your-domain.com
+  #     secretName: taskflow-tls
+  rules:
+    - host: your-domain.com    # ← Replace with your domain (or IP for testing)
+      http:
+        paths:
+          # API traffic → backend
+          - path: /api
+            pathType: Prefix
+            backend:
+              service:
+                name: taskflow-backend
+                port:
+                  number: 8000
+          # All other traffic → frontend
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: taskflow-frontend
+                port:
+                  number: 80

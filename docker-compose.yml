@@ -1,0 +1,80 @@
+version: "3.9"
+
+# ─────────────────────────────────────────────────────────────────────
+# TaskFlow — Docker Compose
+# Usage:
+#   docker compose up --build          # start everything
+#   docker compose up -d               # detached mode
+#   docker compose down -v             # stop + remove volumes
+# ─────────────────────────────────────────────────────────────────────
+
+services:
+
+  # ── MySQL Database ──────────────────────────────────────────────────
+  db:
+    image: mysql:8.0
+    container_name: taskflow_db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-rootpassword}
+      MYSQL_DATABASE:      ${MYSQL_DATABASE:-taskflow_db}
+      MYSQL_USER:          ${MYSQL_USER:-taskflow}
+      MYSQL_PASSWORD:      ${MYSQL_PASSWORD:-taskflowpass}
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD:-rootpassword}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+    networks:
+      - taskflow_net
+
+  # ── FastAPI Backend ─────────────────────────────────────────────────
+  backend:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.backend
+    container_name: taskflow_backend
+    restart: unless-stopped
+    environment:
+      DATABASE_URL:                 mysql+pymysql://${MYSQL_USER:-taskflow}:${MYSQL_PASSWORD:-taskflowpass}@db:3306/${MYSQL_DATABASE:-taskflow_db}
+      SECRET_KEY:                   ${SECRET_KEY:-change-me-in-production}
+      ALGORITHM:                    HS256
+      ACCESS_TOKEN_EXPIRE_MINUTES:  ${ACCESS_TOKEN_EXPIRE_MINUTES:-30}
+      DEBUG:                        ${DEBUG:-false}
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - taskflow_net
+    volumes:
+      # Mount source for hot-reload in dev (remove in prod)
+      - ./backend:/app
+
+  # ── React Frontend ──────────────────────────────────────────────────
+  frontend:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.frontend
+    container_name: taskflow_frontend
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - taskflow_net
+
+# ── Volumes & Networks ────────────────────────────────────────────────
+volumes:
+  db_data:
+
+networks:
+  taskflow_net:
+    driver: bridge
