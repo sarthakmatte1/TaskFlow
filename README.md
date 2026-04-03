@@ -632,13 +632,3 @@ kubectl rollout history deployment/taskflow-backend -n taskflow
 | Image pull error           | Check DockerHub credentials and image name spelling              |
 | Ingress not working        | `kubectl describe ingress -n taskflow`                           |
 | DB migration failed        | `kubectl logs <backend-pod> -n taskflow \| grep alembic`         |
-
----
-
-## 🌿 Branching Strategy
-
-| Branch      | Action                                                                 |
-| ----------- | ---------------------------------------------------------------------- |
-| `feature/*` | Runs tests only                                                        |
-| `staging`   | Tests → Build images → Auto-deploy to staging                         |
-| `main`      | Tests → Build images → Manual approval → Deploy to production         |
