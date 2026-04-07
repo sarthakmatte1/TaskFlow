@@ -5,7 +5,7 @@ import os
 
 class Settings(BaseSettings):
     # Database
-    DATABASE_URL: str = os.getenv("DATABASE_URL")
+    DATABASE_URL: str = os.getenv("DATABASE_URL") or "mysql+pymysql://root:newpassword@localhost:3306/taskflow_db"
 
     # JWT
     SECRET_KEY: str = "hVPTNh9RTSlYLU9TPYZCUz+U1t78yDoh/I5eJ3jqwuM="

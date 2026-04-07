@@ -19,12 +19,6 @@ router = APIRouter(prefix="/api/auth", tags=["Authentication"])
 
 @router.post("/register", response_model=UserResponse, status_code=status.HTTP_201_CREATED)
 def register(user_data: UserCreate, db: Session = Depends(get_db)):
-    """
-    Register a new user.
-    - Validates email uniqueness
-    - Hashes password before storing (never store plain passwords!)
-    - Returns the created user (no password in response)
-    """
     # Check if email already taken
     existing = db.query(User).filter(User.email == user_data.email).first()
     if existing:
@@ -53,12 +47,6 @@ def login(
     form_data: OAuth2PasswordRequestForm = Depends(),
     db: Session = Depends(get_db)
 ):
-    """
-    Login with email + password.
-    - Uses OAuth2PasswordRequestForm (username field = email)
-    - Returns a JWT Bearer token on success
-    - Returns 401 on invalid credentials
-    """
     user = db.query(User).filter(User.email == form_data.username).first()
 
     if not user or not verify_password(form_data.password, user.hashed_password):
@@ -99,11 +87,6 @@ def change_password(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_active_user)
 ):
-    """
-    Change current user's password.
-    - Requires old password verification
-    - Hashes and stores new password
-    """
     if not verify_password(data.old_password, current_user.hashed_password):
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,

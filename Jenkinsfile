@@ -1,22 +1,7 @@
-// ─────────────────────────────────────────────────────────────────────
-// TaskFlow — Jenkins CI/CD Pipeline
-//
-// Prerequisites (configure in Jenkins):
-//   Credentials:
-//     • dockerhub-credentials  → Username/Password  (DockerHub login)
-//     • kubeconfig-secret      → Secret File        (your kubeconfig)
-//   Plugins:
-//     • Docker Pipeline
-//     • Kubernetes CLI
-//     • Pipeline Utility Steps
-// ─────────────────────────────────────────────────────────────────────
-
 pipeline {
     agent any
-
-    // ── Pipeline-wide environment variables ───────────────────────────
     environment {
-        DOCKER_REGISTRY   = "your-dockerhub-username"          // ← Replace
+        DOCKER_REGISTRY   = "sarthakmatte1"     
         BACKEND_IMAGE     = "${DOCKER_REGISTRY}/taskflow-backend"
         FRONTEND_IMAGE    = "${DOCKER_REGISTRY}/taskflow-frontend"
         IMAGE_TAG         = "${env.BUILD_NUMBER}-${env.GIT_COMMIT.take(7)}"
@@ -29,10 +14,8 @@ pipeline {
         disableConcurrentBuilds()
     }
 
-    // ── Stages ────────────────────────────────────────────────────────
     stages {
 
-        // ─────────────────────────────────────────────────────────────
         stage('Checkout') {
             steps {
                 echo "📥 Checking out source code..."
@@ -47,7 +30,6 @@ pipeline {
             }
         }
 
-        // ─────────────────────────────────────────────────────────────
         stage('Test Backend') {
             agent {
                 docker {
@@ -73,7 +55,6 @@ pipeline {
             }
         }
 
-        // ─────────────────────────────────────────────────────────────
         stage('Test Frontend') {
             agent {
                 docker {
@@ -96,7 +77,6 @@ pipeline {
             }
         }
 
-        // ─────────────────────────────────────────────────────────────
         stage('Build & Push Docker Images') {
             when {
                 anyOf {
@@ -115,7 +95,6 @@ pipeline {
                 ]) {
                     sh 'echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin'
 
-                    // Build and push backend
                     sh """
                         docker build \
                             -f docker/Dockerfile.backend \
@@ -126,7 +105,6 @@ pipeline {
                         docker push ${BACKEND_IMAGE}:latest
                     """
 
-                    // Build and push frontend
                     sh """
                         docker build \
                             -f docker/Dockerfile.frontend \
@@ -142,7 +120,6 @@ pipeline {
             }
         }
 
-        // ─────────────────────────────────────────────────────────────
         stage('Deploy to Staging') {
             when { branch 'staging' }
             steps {
@@ -172,11 +149,10 @@ pipeline {
             }
         }
 
-        // ─────────────────────────────────────────────────────────────
         stage('Deploy to Production') {
             when { branch 'main' }
             steps {
-                // Manual approval gate before prod deploy
+
                 input message: "Deploy build #${env.BUILD_NUMBER} to PRODUCTION?", ok: "Deploy"
 
                 echo "🚀 Deploying to production..."
@@ -206,18 +182,15 @@ pipeline {
         }
     }
 
-    // ── Post-build notifications ──────────────────────────────────────
     post {
         success {
             echo "✅ Pipeline succeeded — Build #${env.BUILD_NUMBER}"
         }
         failure {
             echo "❌ Pipeline FAILED — Build #${env.BUILD_NUMBER}"
-            // Add email/Slack notification here:
             // mail to: 'team@example.com', subject: "Build failed: ${env.JOB_NAME}"
         }
         always {
-            // Clean up dangling Docker images on the Jenkins agent
             sh 'docker image prune -f || true'
         }
     }

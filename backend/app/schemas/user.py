@@ -3,7 +3,6 @@ from typing import Optional
 from datetime import datetime
 
 
-# ── Request Schemas ──────────────────────────────────────────────────
 
 class UserCreate(BaseModel):
     """Schema for registering a new user."""
@@ -46,9 +45,6 @@ class ChangePassword(BaseModel):
             raise ValueError("New password must be at least 6 characters")
         return v
 
-
-# ── Response Schemas ─────────────────────────────────────────────────
-
 class UserResponse(BaseModel):
     """Safe user response (never exposes hashed_password)."""
     id: int
@@ -60,8 +56,6 @@ class UserResponse(BaseModel):
 
     model_config = {"from_attributes": True}
 
-
-# ── Auth Schemas ─────────────────────────────────────────────────────
 
 class Token(BaseModel):
     """JWT token response returned on login."""

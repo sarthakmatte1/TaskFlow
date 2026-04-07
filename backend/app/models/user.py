@@ -12,12 +12,6 @@ class UserRole(str, enum.Enum):
 
 
 class User(Base):
-    """
-    Users table.
-    - Stores credentials (email + hashed password)
-    - Has a role for Authorization (admin vs member)
-    - Tracks created/updated timestamps
-    """
     __tablename__ = "users"
 
     id = Column(Integer, primary_key=True, index=True)
@@ -29,7 +23,6 @@ class User(Base):
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
 
-    # Relationships
     tasks = relationship("Task", back_populates="owner", foreign_keys="Task.owner_id")
     assigned_tasks = relationship("Task", back_populates="assignee", foreign_keys="Task.assignee_id")
 

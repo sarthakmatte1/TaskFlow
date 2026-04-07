@@ -58,7 +58,7 @@ def get_current_user(
     - Extracts Bearer token from Authorization header
     - Validates JWT and returns the current user
     """
-    from app.models.user import User  # avoid circular import
+    from app.models.user import User  
 
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,

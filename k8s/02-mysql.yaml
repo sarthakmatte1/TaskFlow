@@ -11,7 +11,7 @@ spec:
   resources:
     requests:
       storage: 5Gi
-  storageClassName: standard   # Change to your cluster's StorageClass
+  storageClassName: standard 
 
 ---
 # ── MySQL StatefulSet ─────────────────────────────────────────────────
@@ -95,4 +95,4 @@ spec:
   ports:
     - port: 3306
       targetPort: 3306
-  clusterIP: None   # Headless service for StatefulSet DNS resolution
+  clusterIP: None   

@@ -3,30 +3,21 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from app.core.config import settings
 
-# Create the SQLAlchemy engine
-# pool_pre_ping=True checks connections before using them (handles dropped connections)
 engine = create_engine(
     settings.DATABASE_URL,
     pool_pre_ping=True,
-    pool_recycle=3600,  # Recycle connections every hour
-    echo=settings.DEBUG  # Log SQL queries in debug mode
+    pool_recycle=3600,  
+    echo=settings.DEBUG 
 )
 
-# SessionLocal: each instance is a database session
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
-# Base class for all ORM models
 Base = declarative_base()
 
 print("DATABASE_URL:", settings.DATABASE_URL)
 
 
 def get_db():
-    """
-    FastAPI Dependency: Yields a database session.
-    Automatically closes the session when the request is done.
-    Usage: db: Session = Depends(get_db)
-    """
     db = SessionLocal()
     try:
         yield db
