@@ -60,6 +60,7 @@ class UserResponse(BaseModel):
 class Token(BaseModel):
     """JWT token response returned on login."""
     access_token: str
+    refresh_token: str
     token_type: str = "bearer"
     user: UserResponse
 
@@ -67,3 +68,6 @@ class Token(BaseModel):
 class TokenData(BaseModel):
     """Payload decoded from JWT token."""
     email: Optional[str] = None
+
+class RefreshTokenRequest(BaseModel):
+    refresh_token: str
